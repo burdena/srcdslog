@@ -37,9 +37,15 @@ module.exports.parseLineInfo = function(line,callback) {
     return callback({ type: 'worldtrigger', trigger: result[1], map: result[2] });
   }
 
-  var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: World triggered ["](.+)["]$/);
+
+  // Match 1
+  // Full match  0-59  `"12/06/2017 - 22:09:19.982 - World triggered "Round_Start""`
+  // Group 1.  1-11  `12/06/2017`
+  // Group 2.  14-26 `22:09:19.982`
+  // Group 3.  46-57 `Round_Start`
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - World triggered ["](.+)["]"/);
   if (result !== null) {
-    return callback({ type: 'worldtrigger', trigger: result[1] });
+    return callback({ type: 'worldtrigger', trigger: result[3] });
   }
 
   var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: rcon from ["](.+)[:](\d+)["][:] command ["](.+)["]$/);
