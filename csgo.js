@@ -182,10 +182,23 @@ module.exports.parseLineInfo = function(line,callback) {
 	  return callback({ type: 'assist', player: module.exports.parsePlayer(result[1]), killed: module.exports.parsePlayer(result[2]) });
   } 
   
+//   Full match  0-210 `"12/07/2017 - 09:38:15.491 - "Troy<11><BOT><TERRORIST>" [-1258 2193 4] attacked "Ivan<9><BOT><CT>" [-2019 2255 -0] with "galilar" (damage "28") (damage_armor "4") (health "0") (armor "82") (hitgroup "stomach")"`
+// Group 1.  1-11  `12/07/2017`   date
+// Group 2.  14-26 `09:38:15.491` time
+// Group 3.  30-54 `Troy<11><BOT><TERRORIST>` player
+// Group 4.  57-69 `-1258 2193 4` location1
+// Group 5.  81-97 `Ivan<9><BOT><CT>` player2
+// Group 6.  100-113 `-2019 2255 -0` location2
+// Group 7.  121-128 `galilar` weapon
+// Group 8.  139-141 `28` 
+// Group 9.  159-160 `4`
+// Group 10. 172-173 `0`
+// Group 11. 184-186 `82`
+// Group 12. 200-207 `stomach`
   //L 05/06/2015 - 19:08:16: "Derek<6><BOT><TERRORIST>" [-1416 1895 13] attacked "Xavier<5><BOT><CT>" [-1676 2492 7] with "galilar" (damage "28") (damage_armor "4") (health "49") (armor "91") (hitgroup "stomach")
   var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] attacked "(.+)" \[(.+)\] with "(.+)" \(damage "(.+)"\) \(damage_armor "(.+)"\) \(health "(.+)"\) \(armor "(.+)"\) \(hitgroup "(.+)"\)"/);
   if(result !== null) {
-	  return callback({type: 'attack',  player: module.exports.parsePlayer(result[1]), fired: result[2], damaged: module.exports.parsePlayer(result[3]),to: result[4], weapon: result[5], damage: parseInt(result[6]), dam_arm: parseInt(result[7]), health: parseInt(result[8]), armour: parseInt(result[9]), hitbox: result[10] });
+	  return callback({type: 'attack',  player: module.exports.parsePlayer(result[3]), location1: result[4], damaged: module.exports.parsePlayer(result[5]),location2: result[6], weapon: result[7], damage: parseInt(result[8]), dam_arm: parseInt(result[9]), health: parseInt(result[10]), armour: parseInt(result[11]), hitbox: result[12] });
 	  
   }
   
