@@ -196,9 +196,9 @@ module.exports.parseLineInfo = function(line,callback) {
 	  return callback({type: 'kill', player: module.exports.parsePlayer(result[1]), from: result[2], killed: module.exports.parsePlayer(result[3]), end: result[4], weapon: result[5], wallbang: true });
   }
   
-   var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: "(.+)" assisted killing "(.+)"/);
+   var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" assisted killing "(.+)""/);
   if(result !== null) {
-	  return callback({ type: 'assist', player: module.exports.parsePlayer(result[1]), killed: module.exports.parsePlayer(result[2]) });
+	  return callback({ type: 'assist', player: module.exports.parsePlayer(result[3]), killed: module.exports.parsePlayer(result[4]) });
   } 
   
 //   Full match  0-210 `"12/07/2017 - 09:38:15.491 - "Troy<11><BOT><TERRORIST>" [-1258 2193 4] attacked "Ivan<9><BOT><CT>" [-2019 2255 -0] with "galilar" (damage "28") (damage_armor "4") (health "0") (armor "82") (hitgroup "stomach")"`
