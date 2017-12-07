@@ -211,9 +211,17 @@ module.exports.parseLineInfo = function(line,callback) {
 	  return callback({type: 'attack', player: module.exports.parsePlayer(result[1]), fired: result[2], damaged: module.exports.parsePlayer(result[3]),to: result[4], weapon: result[5], damage: parseInt(result[6]), dam_arm: parseInt(result[7]), health: parseInt(result[8]), armour: parseInt(result[9]), hitbox: result[10], wallbang: true  });
   }  
   
-  var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: "(.+)" (\[.+\]) killed "(.+)" (\[.+\]) with "(.+)"\((headshot)\)/);
+  // Full match  0-139 `"12/07/2017 - 09:59:17.606 - "Zim<2><BOT><TERRORIST>" [-374 1055 -67] killed "Troy<11><BOT><CT>" [-447 1465 -62] with "galilar" (headshot)"`
+  // Group 1.  1-11  `12/07/2017`
+  // Group 2.  14-26 `09:59:17.606`
+  // Group 3.  30-52 `Zim<2><BOT><TERRORIST>`
+  // Group 4.  55-68 `-374 1055 -67`
+  // Group 5.  78-95 `Troy<11><BOT><CT>`
+  // Group 6.  98-111  `-447 1465 -62`
+  // Group 7.  119-126 `galilar`
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] killed "(.+)" \[(.+)\] with "(.+)" \(headshot\)"/);
   if(result !== null) {
-	  return callback({type: 'kill', player: module.exports.parsePlayer(result[1]), from: result[2], killed: module.exports.parsePlayer(result[3]), end: result[4], weapon: result[5], hs: true });
+	  return callback({type: 'kill', player: module.exports.parsePlayer(result[3]), location1: result[4], killed: module.exports.parsePlayer(result[5]), location2: result[6], weapon: result[7], hs: true });
   }
   
   var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: Team .+ triggered .+ \(CT "(.+)"\) \(T "(.+)"\)/);
