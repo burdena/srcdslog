@@ -155,9 +155,16 @@ module.exports.parseLineInfo = function(line,callback) {
     return callback({ type: 'purchased', player: module.exports.parsePlayer(result[1]) , item: result[2] });  
   }
   
-  var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: "(.+)" threw (.+) \[(.+)\]/);
+
+  // Full match  0-85  `"12/07/2017 - 10:08:20.168 - "Wade<6><BOT><TERRORIST>" threw hegrenade [510 1939 98]"`
+  // Group 1.  1-11  `12/07/2017`
+  // Group 2.  14-26 `10:08:20.168`
+  // Group 3.  30-53 `Wade<6><BOT><TERRORIST>`
+  // Group 4.  61-70 `hegrenade`
+  // Group 5.  72-83 `510 1939 98`
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" threw (.+) \[(.+)\]"/);
   if(result !==  null) {
-	return callback({ type: 'threw', player: module.exports.parsePlayer(result[1]) , item: result[2], coords: result[3] });	  
+	return callback({ type: 'threw', player: module.exports.parsePlayer(result[3]) , item: result[4], coords: result[5] });	  
   }
   
   
