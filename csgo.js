@@ -172,10 +172,18 @@ module.exports.parseLineInfo = function(line,callback) {
   if(result !== null) {
 	  return callback({type: 'teamscore', team: result[1], score: parseInt(result[2]), players: parseInt(result[3])});
   }
-    
-  var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: "(.+)" (\[.+\]) killed "(.+)" (\[.+\]) with "(.+)"/);
+  
+  // Full match  0-122 `"12/07/2017 - 10:12:40.206 - "Dave<3><BOT><CT>" [516 225 3] killed "Vinny<10><BOT><TERRORIST>" [-143 440 63] with "famas""`
+  // Group 1.  1-11  `12/07/2017`
+  // Group 2.  14-26 `10:12:40.206`
+  // Group 3.  30-46 `Dave<3><BOT><CT>`
+  // Group 4.  49-58 `516 225 3`
+  // Group 5.  68-93 `Vinny<10><BOT><TERRORIST>`
+  // Group 6.  96-107  `-143 440 63`
+  // Group 7.  115-121 `famas"`
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] killed "(.+)" \[(.+)\] with "(.+)"/);
   if(result !== null) {
-	  return callback({type: 'kill', player: module.exports.parsePlayer(result[1]), from: result[2], killed: module.exports.parsePlayer(result[3]), end: result[4], weapon: result[5] });
+	  return callback({type: 'kill', player: module.exports.parsePlayer(result[3]), location1: result[4], killed: module.exports.parsePlayer(result[5]), location2: result[6], weapon: result[7] });
   } 
   
   var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: "(.+)" (\[.+\]) killed "(.+)" (\[.+\]) with "(.+)"\(penetrated\)/);
