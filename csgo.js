@@ -45,7 +45,7 @@ module.exports.parseLineInfo = function(line,callback) {
   // Group 5.  78-95 `Troy<11><BOT><CT>`
   // Group 6.  98-111  `-447 1465 -62`
   // Group 7.  119-126 `galilar`
-  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] killed "(.+)" \[(.+)\] with "(.+)" \(headshot\)"/);
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] killed "(.+)" \[(.+)\] with "(.+)" \(headshot\)/);
   if(result !== null) {
     return callback({type: 'kill', player: module.exports.parsePlayer(result[3]), location1: result[4], killed: module.exports.parsePlayer(result[5]), location2: result[6], weapon: result[7], hs: true });
   }
