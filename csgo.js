@@ -183,7 +183,7 @@ module.exports.parseLineInfo = function(line,callback) {
   } 
   
   //L 05/06/2015 - 19:08:16: "Derek<6><BOT><TERRORIST>" [-1416 1895 13] attacked "Xavier<5><BOT><CT>" [-1676 2492 7] with "galilar" (damage "28") (damage_armor "4") (health "49") (armor "91") (hitgroup "stomach")
-  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] attacked "(.+)" \[(.+)\] with "(.+)" \(damage "(.+)"\) \(damage_armor "(.+)"\) \(health "(.+)"\) \(armor "(.+)"\) \(hitgroup "(.+)"\)""/);
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" \[(.+)\] attacked "(.+)" \[(.+)\] with "(.+)" \(damage "(.+)"\) \(damage_armor "(.+)"\) \(health "(.+)"\) \(armor "(.+)"\) \(hitgroup "(.+)"\)"/);
   if(result !== null) {
 	  return callback({type: 'attack',  player: module.exports.parsePlayer(result[1]), fired: result[2], damaged: module.exports.parsePlayer(result[3]),to: result[4], weapon: result[5], damage: parseInt(result[6]), dam_arm: parseInt(result[7]), health: parseInt(result[8]), armour: parseInt(result[9]), hitbox: result[10] });
 	  
