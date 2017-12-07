@@ -145,6 +145,21 @@ module.exports.parseLineInfo = function(line,callback) {
 	  return callback({type: 'attack',  player: module.exports.parsePlayer(result[3]), location1: result[4], damaged: module.exports.parsePlayer(result[5]),location2: result[6], weapon: result[7], damage: parseInt(result[8]), dam_arm: parseInt(result[9]), health: parseInt(result[10]), armour: parseInt(result[11]), hitbox: result[12] });
 	  
   }
+
+
+
+  // Full match 0-114 `"12/07/2017 - 10:57:43.755 - "Derek<1><BOT><CT>" money change 2200-1200 = $1000 (tracked) (purchase: weapon_nova)"`
+  // Group 1.  1-11  `12/07/2017`
+  // Group 2.  14-26 `10:57:43.755`
+  // Group 3.  30-47 `Derek<1><BOT><CT>`
+  // Group 4.  62-66 `2200`
+  // Group 5.  67-72 `1200 `
+  // Group 6.  75-79 `1000`
+  // Group 7.  101-112 `weapon_nova`
+   var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - "(.+)" money change (.+)-(.+)= \$(.+) \(tracked\) \(purchase: (.+)\)"/);
+  if (result !== null) {
+    return callback({ type: 'purchased', player: module.exports.parsePlayer(result[1]) , item: result[2] });  
+  }
   
   
     
