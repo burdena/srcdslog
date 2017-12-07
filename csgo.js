@@ -146,7 +146,7 @@ module.exports.parseLineInfo = function(line,callback) {
     return callback({ type: 'trigger', player: module.exports.parsePlayer(result[1]) , event: result[2] });  
   }
 
-  var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d: "(.+)" purchased ["](.+)["]/);
+  var result = line.match(/"\d\d\/\d\d\/\d\d\d\d - \d\d:\d\d:\d\d.\d\d\d - "(.+)" purchased ["](.+)["]"/);
   if (result !== null) {
     return callback({ type: 'purchased', player: module.exports.parsePlayer(result[1]) , item: result[2] });  
   }
