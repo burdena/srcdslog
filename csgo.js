@@ -206,6 +206,16 @@ module.exports.parseLineInfo = function(line,callback) {
     return callback({ type: 'buyzone', player: module.exports.parsePlayer(result[3]), weapons: result[4] });
   }
 
+  // Full match  0-79  `"12/07/2017 - 10:34:21.088 - rcon from "89.163.146.185:50862": command "stats""`
+  // Group 1.  1-11  `12/07/2017`
+  // Group 2.  14-26 `10:34:21.088`
+  // Group 3.  40-60 `89.163.146.185:50862`
+  // Group 4.  72-77 `stats`
+  var result = line.match(/"(\d\d\/\d\d\/\d\d\d\d) - (\d\d:\d\d:\d\d.\d\d\d) - rcon from "(.+)": command "(.+)""/);
+  if(result !== null) {
+    return callback({ type: 'cmd', from: result[3], command: result[4] });
+  }
+
 
   
 //   Full match  0-210 `"12/07/2017 - 09:38:15.491 - "Troy<11><BOT><TERRORIST>" [-1258 2193 4] attacked "Ivan<9><BOT><CT>" [-2019 2255 -0] with "galilar" (damage "28") (damage_armor "4") (health "0") (armor "82") (hitgroup "stomach")"`
